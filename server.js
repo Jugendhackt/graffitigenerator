@@ -1,5 +1,5 @@
 const http = require('http');
-const exec = require('child_process').exec;
+const { spawn } = require('child_process');
 const { parse } = require('querystring');
 const fs = require('fs');
 const port = 80;
@@ -18,25 +18,9 @@ http.createServer((req, res) => {
             res.end();
             return;
         }
-        exec(`python3 textTransform.py ${query.message}`, (err) => {
-            if (err) {
-                res.writeHead(500, 'Internal Error');
-                res.end();
-                console.log(err);
-                return;
-            }
-            
-            try {
-                res.writeHead(200, { 'content-type': 'image/png' });
-                var s = fs.createReadStream('final.png');
-                s.pipe(res);
-                res.end();
-            } catch (e) {
-                console.log(e);
-                res.writeHead(500, 'Internal Error');
-                res.end();
-            }
-        });
+        var proc = spawn('python3', ['textTransform.py']);
+        var pstdin = proc.stdin;
+        pstdin.write(query.message + '\n');
     }
 }).listen(port);
 console.log('Listening on ' + port);
