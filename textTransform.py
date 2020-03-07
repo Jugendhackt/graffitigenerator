@@ -6,7 +6,7 @@ import sys
 import os
 import random
 
-fontfiles = list(map(lambda x: 'fonts/' + x, os.listdir('fonts')))
+fontfiles = map(lambda x: 'fonts/' + x, os.listdir('fonts'))
 fonts = list(filter(lambda x: x.endswith('.otf') or x.endswith('.ttf'), fontfiles))
 
 if len(fonts) == 0:
