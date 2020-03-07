@@ -21,7 +21,9 @@ W = img2.size[0]
 H = img2.size[1]
 img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
 
-text = sys.argv[1] if len(sys.argv) > 1 else "DeepGraffiti"
+text = input()
+if not text:
+    text = "DeepGraffiti"
 
 draw = ImageDraw.Draw(img)
 
