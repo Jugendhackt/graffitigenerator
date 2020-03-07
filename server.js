@@ -12,7 +12,7 @@ http.createServer((req, res) => {
         query = parse(req.url.split('?')[1]);
     }
     if (url = '/text') {
-        if (query.message === undefined) {
+        if (query === undefined || query.message === undefined) {
             res.writeHead(404, 'Invalid message');
             res.end();
             return;
@@ -27,13 +27,15 @@ http.createServer((req, res) => {
             
             try {
                 res.writeHead(200, { 'content-type': 'image/png' });
-                s = fs.readFileSync('final.png').pipe(res);
+                var s = fs.readFileSync('final.png');
+                s.pipe(res);
                 res.end();
             } catch (e) {
                 console.log(e);
                 res.writeHead(500, 'Internal Error');
-                res.end()
+                res.end();
             }
         });
     }
-});
+}).listen(port);
+console.log('Listening on ' + port);
