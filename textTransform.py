@@ -46,7 +46,11 @@ stroke = (random.randint(20, 150),
           random.randint(20, 150),
           random.randint(20, 150))
 
-drawCenterText(text, stroke=stroke, sw=10)
+fill = (random.randint(200, 255),
+        random.randint(200, 255),
+        random.randint(200, 255))
+
+drawCenterText(text, fill=fill, stroke=stroke, sw=10)
 
 pix = img.load()
 pix2 = img2.load()
