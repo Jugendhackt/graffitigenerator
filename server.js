@@ -28,7 +28,7 @@ http.createServer((req, res) => {
             
             try {
                 res.writeHead(200, { 'content-type': 'image/png' });
-                var s = fs.readFileSync('final.png');
+                var s = fs.createReadStream('final.png');
                 s.pipe(res);
                 res.end();
             } catch (e) {
