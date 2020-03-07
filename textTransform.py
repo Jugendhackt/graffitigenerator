@@ -21,18 +21,30 @@ W = img2.size[0]
 H = img2.size[1]
 img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
 
-text = input()
+text = input("text? ")
 if not text:
     text = "DeepGraffiti"
 
 draw = ImageDraw.Draw(img)
 
 def drawCenterText(txt, fill='#fff', stroke='#333', sw=0):
-    tf = ImageFont.truetype(fnt, 10)
+    tf = ImageFont.truetype(fnt, 40)
     w, h = draw.textsize(txt, font=tf)
-    font = ImageFont.truetype(fnt, round(W / w * 10))
+    if w/h > W/H: # aspect wider
+        newsize = round((W-100) / w * 40)
+    else: # aspect higher
+        newsize = round((H-100) / h * 40)
+    font = ImageFont.truetype(fnt, newsize)
     tw, th = draw.textsize(txt, font=font)
-    draw.text(((W-tw)/2, (H-th)/2), txt, fill=fill, font=font, stroke_fill=stroke, stroke_width=sw)
+    x = 50+(W-tw)/2
+    y = (H-th)/2
+    # dirty fix for short texts
+    if len(txt) == 2:
+        x += len(txt)*120
+    if len(txt) == 1:
+        x += 200
+    print("drawing text %dx%d at (%d,%d) in canvas %dx%d (scaled to %dpt from %dx%d)" % (tw,th,x,y,W,H,newsize,w,h))
+    draw.text((x, y), txt, fill=fill, font=font, stroke_fill=stroke, stroke_width=sw)
 
 
 stroke = (random.randint(20, 150),
