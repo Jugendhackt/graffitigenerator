@@ -58,7 +58,7 @@ pix2 = img2.load()
 
 img.save('.temp.png')
 
-os.system('convert texture.png .temp.png -compose Multiply -composite .temp2.png')
+os.system('convert texture-small.png .temp.png -compose Multiply -composite .temp2.png')
 os.system('convert .temp2.png .temp.png -compose copy-opacity -composite final.png')
 
 os.remove('.temp.png')
