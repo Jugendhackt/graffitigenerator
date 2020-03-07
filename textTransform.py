@@ -9,14 +9,25 @@ import random
 fontfiles = map(lambda x: 'fonts/' + x, os.listdir('fonts'))
 fonts = list(filter(lambda x: x.endswith('.otf') or x.endswith('.ttf'), fontfiles))
 
+texturefiles = map(lambda x: 'textures/' + x, os.listdir('textures'))
+textures = list(filter(lambda x: x.endswith('-small.png'), texturefiles))
+
+
 if len(fonts) == 0:
     print("no fonts found in fonts/, exiting")
+    sys.exit(-1)
+
+if len(textures) == 0:
+    print("no textures found in textures/, exiting")
     sys.exit(-1)
 
 print("loaded fonts:", " ".join(fonts))
 fnt = random.choice(fonts)
 
-img2 = Image.open('texture-small.png', 'r')
+print("loaded textures:", " ".join(fonts))
+texture = random.choice(textures)
+
+img2 = Image.open(texture, 'r')
 W = img2.size[0]
 H = img2.size[1]
 img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
@@ -57,7 +68,7 @@ pix2 = img2.load()
 
 img.save('.temp.png')
 
-os.system('convert texture-small.png .temp.png -compose Multiply -composite .temp2.png')
+os.system('convert %s .temp.png -compose Multiply -composite .temp2.png' % texture)
 try:
     os.remove('final.png')
 except:
