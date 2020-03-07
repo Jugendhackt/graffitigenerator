@@ -7,7 +7,7 @@ import os
 import random
 
 
-def drawCenterText(txt, fill='#fff', stroke='#333', sw=0):
+def drawCenterText(txt, fnt, draw, W, H, fill='#fff', stroke='#333', sw=0):
     tf = ImageFont.truetype(fnt, 40)
     w, h = draw.textsize(txt, font=tf)
     if w/h > W/H:  # aspect wider
@@ -64,7 +64,7 @@ def generate(text="DeepGraffiti", out="final.png"):
             random.randint(200, 255),
             random.randint(200, 255))
 
-    drawCenterText(text, fill=fill, stroke=stroke, sw=10)
+    drawCenterText(text, fnt, draw, W, H, fill=fill, stroke=stroke, sw=10)
 
     pix = img.load()
     pix2 = img2.load()
@@ -78,8 +78,7 @@ def generate(text="DeepGraffiti", out="final.png"):
         pass
     except:
         pass
-    os.system(
-        'convert .temp2.png .temp.png -compose copy-opacity -composite %s', out)
+    os.system('convert .temp2.png .temp.png -compose copy-opacity -composite %s' % out)
 
     os.remove('.temp.png')
     os.remove('.temp2.png')
