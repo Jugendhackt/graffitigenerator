@@ -21,10 +21,16 @@ http.createServer((req, res) => {
             if (err) {
                 res.writeHead(500, 'Internal Error');
                 res.end();
-                print(err);
+                console.log(err);
                 return;
             }
-            
+
+            res.writeHead(200, { 'content-type': 'image/png' });
+            try {
+                s = fs.readFileSync('final.png').pipe(res);
+            } catch (e) {
+                console.log(e)
+            }
         });
     }
 });
