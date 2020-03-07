@@ -20,7 +20,22 @@ http.createServer((req, res) => {
         }
         var proc = spawn('python3', ['textTransform.py']);
         var pstdin = proc.stdin;
+        pstdin.setEncoding('utf-8');
         pstdin.write(query.message + '\n');
+        pstdin.end();
+
+        proc.on('close', (code) => {
+            try {
+                var s = fs.createReadStream('final.png');
+                res.writeHead(200, { 'content-type': 'image/png' });
+                s.pipe(res);
+                res.end();
+                fs.unlink('final.png');
+            } catch (e) {
+                res.writeHead(500, 'Internal Error');
+                res.end();
+            }
+        });
     }
 }).listen(port);
 console.log('Listening on ' + port);
