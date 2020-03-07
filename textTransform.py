@@ -21,7 +21,6 @@ fnt = random.choice(fonts)
 def drawCenterText(txt, fill='#fff', stroke='#333', sw=0):
     tf = ImageFont.truetype(fnt, 10)
     w, h = draw.textsize(txt, font=tf)
-    print('Width:', w, '\n', 'IWidth:', W)
     font = ImageFont.truetype(fnt, round(W / w * 10))
     tw, th = draw.textsize(txt, font=font)
     draw.text(((W-tw)/2, (H-th)/2), txt, fill=fill, font=font, stroke_fill=stroke, stroke_width=sw)
