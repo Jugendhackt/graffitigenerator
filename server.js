@@ -24,12 +24,15 @@ http.createServer((req, res) => {
                 console.log(err);
                 return;
             }
-
-            res.writeHead(200, { 'content-type': 'image/png' });
+            
             try {
+                res.writeHead(200, { 'content-type': 'image/png' });
                 s = fs.readFileSync('final.png').pipe(res);
+                res.end();
             } catch (e) {
-                console.log(e)
+                console.log(e);
+                res.writeHead(500, 'Internal Error');
+                res.end()
             }
         });
     }
