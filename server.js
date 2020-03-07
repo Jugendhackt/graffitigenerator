@@ -3,6 +3,7 @@ const exec = require('child_process').exec;
 const { parse } = require('querystring');
 const fs = require('fs');
 const port = 80;
+const illegal = [];
 
 http.createServer((req, res) => {
     var url = req.url;
