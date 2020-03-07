@@ -29,10 +29,10 @@ http.createServer((req, res) => {
                 var s = fs.createReadStream('final.png');
                 res.writeHead(200, { 'content-type': 'image/png' });
                 s.pipe(res);
-                res.end();
-                fs.unlink('final.png');
+                fs.unlink('final.png', () => { });
             } catch (e) {
                 res.writeHead(500, 'Internal Error');
+                console.log(e);
                 res.end();
             }
         });
