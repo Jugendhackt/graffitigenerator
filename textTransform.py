@@ -31,18 +31,13 @@ def drawCenterText(txt, fill='#fff', stroke='#333', sw=0):
     tf = ImageFont.truetype(fnt, 40)
     w, h = draw.textsize(txt, font=tf)
     if w/h > W/H: # aspect wider
-        newsize = round((W-100) / w * 40)
+        newsize = round((W - 40) / w * 40)
     else: # aspect higher
-        newsize = round((H-100) / h * 40)
+        newsize = round((H - 40) / h * 40)
     font = ImageFont.truetype(fnt, newsize)
     tw, th = draw.textsize(txt, font=font)
-    x = 50+(W-tw)/2
+    x = (W-tw)/2 - 2 
     y = (H-th)/2
-    # dirty fix for short texts
-    if len(txt) == 2:
-        x += len(txt)*120
-    if len(txt) == 1:
-        x += 200
     print("drawing text %dx%d at (%d,%d) in canvas %dx%d (scaled to %dpt from %dx%d)" % (tw,th,x,y,W,H,newsize,w,h))
     draw.text((x, y), txt, fill=fill, font=font, stroke_fill=stroke, stroke_width=sw)
 
@@ -51,14 +46,14 @@ stroke = (random.randint(20, 150),
           random.randint(20, 150),
           random.randint(20, 150))
 
-drawCenterText(text, stroke=stroke, sw=50)
+drawCenterText(text, stroke=stroke, sw=10)
 
 pix = img.load()
 pix2 = img2.load()
 
 img.save('.temp.png')
 
-os.system('convert texture.png .temp.png -compose Multiply -composite .temp2.png')
+os.system('convert texture-small.png .temp.png -compose Multiply -composite .temp2.png')
 os.system('convert .temp2.png .temp.png -compose copy-opacity -composite final.png')
 
 os.remove('.temp.png')
