@@ -13,7 +13,7 @@ W = img2.size[0]
 H = img2.size[1]
 img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
 
-text = sys.argv[1]
+text = sys.argv[1] if len(sys.argv) > 1 else "DeepGraffiti"
 
 draw = ImageDraw.Draw(img)
 fnt = random.choice(fonts)
@@ -31,7 +31,7 @@ stroke = (random.randint(20, 150),
           random.randint(20, 150),
           random.randint(20, 150))
 
-drawCenterText("DeepGraffiti", stroke=stroke, sw=50)
+drawCenterText(text, stroke=stroke, sw=50)
 
 pix = img.load()
 pix2 = img2.load()
