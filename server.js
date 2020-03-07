@@ -18,6 +18,7 @@ var server = http.createServer((req, res) => {
             res.end();
             return;
         }
+        console.log('Got text request: ' + query.message);
         var proc = spawn('python3', ['textTransform.py']);
         var pstdin = proc.stdin;
         pstdin.setEncoding('utf-8');
@@ -30,7 +31,6 @@ var server = http.createServer((req, res) => {
                 res.writeHead(200, { 'content-type': 'image/png' });
                 s.pipe(res)
                 .on('finish', () => {
-                    fs.unlink('final.png', () => { });
                     res.end();
                 });
             } catch (e) {

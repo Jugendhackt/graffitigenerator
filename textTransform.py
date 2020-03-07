@@ -70,7 +70,8 @@ img.save('.temp.png')
 
 os.system('convert %s .temp.png -compose Multiply -composite .temp2.png' % texture)
 try:
-    os.remove('final.png')
+    #os.remove('final.png')
+    pass
 except:
     pass
 os.system('convert .temp2.png .temp.png -compose copy-opacity -composite final.png')
