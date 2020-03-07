@@ -16,7 +16,7 @@ if len(fonts) == 0:
 print("loaded fonts:", " ".join(fonts))
 fnt = random.choice(fonts)
 
-img2 = Image.open('texture.png', 'r')
+img2 = Image.open('texture-small.png', 'r')
 W = img2.size[0]
 H = img2.size[1]
 img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
