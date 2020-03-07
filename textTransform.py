@@ -6,7 +6,15 @@ import sys
 import os
 import random
 
-fonts = ['font1.ttf', 'font3.otf']
+fontfiles = list(map(lambda x: 'fonts/' + x, os.listdir('fonts')))
+fonts = list(filter(lambda x: x.endswith('.otf') or x.endswith('.ttf'), fontfiles))
+
+if len(fonts) == 0:
+    print("no fonts found in fonts/, exiting")
+    sys.exit(-1)
+
+print("loaded fonts:", " ".join(fonts))
+fnt = random.choice(fonts)
 
 img2 = Image.open('texture.png', 'r')
 W = img2.size[0]
@@ -16,12 +24,10 @@ img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
 text = sys.argv[1] if len(sys.argv) > 1 else "DeepGraffiti"
 
 draw = ImageDraw.Draw(img)
-fnt = random.choice(fonts)
 
 def drawCenterText(txt, fill='#fff', stroke='#333', sw=0):
     tf = ImageFont.truetype(fnt, 10)
     w, h = draw.textsize(txt, font=tf)
-    print('Width:', w, '\n', 'IWidth:', W)
     font = ImageFont.truetype(fnt, round(W / w * 10))
     tw, th = draw.textsize(txt, font=font)
     draw.text(((W-tw)/2, (H-th)/2), txt, fill=fill, font=font, stroke_fill=stroke, stroke_width=sw)
