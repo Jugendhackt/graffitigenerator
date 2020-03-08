@@ -72,15 +72,15 @@ def generate(text="DeepGraffiti", out="final.png", trim=True):
     img.save('.temp.png')
 
     os.system(
-        'convert %s .temp.png -compose Multiply -composite .temp2.png' % texture)
+        'convert \"%s\" .temp.png -compose Multiply -composite .temp2.png' % texture)
     if trim:
         os.system('convert .temp2.png .temp.png -compose copy-opacity -composite .temp3.png')
-        os.system('convert .temp3.png -trim %s' % out)
+        os.system('convert .temp3.png -trim \"%s\"' % out)
         os.remove('.temp.png')
         os.remove('.temp2.png')
         os.remove('.temp3.png')
     else:
-        os.system('convert .temp2.png .temp.png -compose copy-opacity -composite %s' % out)
+        os.system('convert .temp2.png .temp.png -compose copy-opacity -composite \"%s\"' % out)
         os.remove('.temp.png')
         os.remove('.temp2.png')
     
