@@ -6,6 +6,15 @@ from urllib.parse import urlparse, parse_qs
 
 port = 80
 
+def read_in_chunks(file_object, chunk_size=1024):
+    """Lazy function (generator) to read a file piece by piece.
+    Default chunk size: 1k."""
+    while True:
+        data = file_object.read(chunk_size)
+        if not data:
+            break
+        yield data
+
 class GraffitiHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         print('\033[32;1m%s\033[0m;' % self.path)
@@ -17,11 +26,16 @@ class GraffitiHandler(http.server.BaseHTTPRequestHandler):
                 self.send_response(400, 'Invalid message')
                 self.end_headers()
                 return
-            print('Got text request: ' + query["message"])
-            os.remove('final.png')
-            gfm.generate(text=query["message"], out="final.png")
+            print('Got text request: ' + query["message"][0])
+            #os.remove('final.png')
+            gfm.generate(text=query["message"][0], out="final.png")
             self.send_response(200)
             self.send_header('content-type', 'image/png')
+            self.end_headers()
+            with open('final.png', 'rb') as final:
+                for chunk in read_in_chunks(final):
+                    self.wfile.write(chunk)
+            
 
 socketserver.TCPServer.allow_reuse_address = True
 
