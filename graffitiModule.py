@@ -24,7 +24,7 @@ def drawCenterText(txt, fnt, draw, W, H, fill='#fff', stroke='#333', sw=0):
               stroke_fill=stroke, stroke_width=sw)
 
 
-def generate(text="DeepGraffiti", out="final.png"):
+def generate(text="DeepGraffiti", out="final.png", trim=True):
     fontfiles = map(lambda x: 'fonts/' + x, os.listdir('fonts'))
     fonts = list(filter(lambda x: x.endswith('.otf')
                         or x.endswith('.ttf'), fontfiles))
@@ -73,12 +73,14 @@ def generate(text="DeepGraffiti", out="final.png"):
 
     os.system(
         'convert %s .temp.png -compose Multiply -composite .temp2.png' % texture)
-    try:
-        # os.remove('final.png')
-        pass
-    except:
-        pass
-    os.system('convert .temp2.png .temp.png -compose copy-opacity -composite %s' % out)
-
-    os.remove('.temp.png')
-    os.remove('.temp2.png')
+    if trim:
+        os.system('convert .temp2.png .temp.png -compose copy-opacity -composite .temp3.png')
+        os.system('convert .temp3.png -trim %s' % out)
+        os.remove('.temp.png')
+        os.remove('.temp2.png')
+        os.remove('.temp3.png')
+    else:
+        os.system('convert .temp2.png .temp.png -compose copy-opacity -composite %s' % out)
+        os.remove('.temp.png')
+        os.remove('.temp2.png')
+    
