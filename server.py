@@ -32,13 +32,14 @@ class GraffitiHandler(http.server.BaseHTTPRequestHandler):
             if "trim" in query:
                 if query["trim"][0] == "false":
                     trim = False
-            gfm.generate(text=query["message"][0], out="final.png")
+            gfm.generate(text=query["message"][0], out="final.png", trim=trim)
             self.send_response(200)
             self.send_header('content-type', 'image/png')
             self.end_headers()
             with open('final.png', 'rb') as final:
-                for chunk in read_in_chunks(final):
+                for chunk in read_in_chunks(final, 512):
                     self.wfile.write(chunk)
+            os.remove('final.png')
             
 
 socketserver.TCPServer.allow_reuse_address = True
