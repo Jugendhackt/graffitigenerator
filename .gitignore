@@ -115,3 +115,6 @@ magick
 
 # Export
 final.png
+
+# __pycache__
+__pycache__/
