@@ -30,7 +30,8 @@ class GraffitiHandler(http.server.BaseHTTPRequestHandler):
             #os.remove('final.png')
             trim = True
             if "trim" in query:
-                trim = query[trim][0]
+                if query["trim"][0] == "false":
+                    trim = False
             gfm.generate(text=query["message"][0], out="final.png")
             self.send_response(200)
             self.send_header('content-type', 'image/png')
