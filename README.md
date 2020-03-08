@@ -1,5 +1,5 @@
 # graffitigenerator
-Grafikgenerator für den DeppGraffiti
+Grafikgenerator für den DeepGraffiti
 
 ## API Usage
 
