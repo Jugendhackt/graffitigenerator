@@ -1,14 +1,14 @@
-FROM python:3.8.2-buster
+FROM python:rc-alpine
+RUN apk add build-base py-pip libpng-dev jpeg-dev zlib-dev freetype-dev imagemagick
+ENV LIBRARY_PATH=/lib:/usr/lib
+
 RUN pip3 install pillow
-RUN pip3 install image
+
+RUN apk del build-base py-pip
 
 WORKDIR /usr/src/graffiti
 
-COPY * ./
-COPY fonts fonts/
-COPY textures textures/
-COPY assets assets/
-
+COPY . ./
 
 EXPOSE 80
 
